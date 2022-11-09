@@ -172,6 +172,8 @@ apt-get install isc-dhcp-server -y
 
 Lalu untuk node-node lainnya, kita dapat mengetes apakah masing-masing node sudah terhubung jaringan internet dengan menjalankan ```bash soal1.sh``` pada masing-masing node
 
+* Ostania dan Client
+
 ```
 ping google.com -c 5
 ```
