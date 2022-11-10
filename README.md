@@ -149,6 +149,9 @@ Pertama, pada node WISE, kita akan menginstal bind9 karena WISE berperan sebagai
 apt-get update 
 apt-get install bind9 -y
 ```
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200989410-e8a4e63e-971f-4cae-b661-6ff996274771.jpeg"> 
+</p>
 
 Kedua, pada node Berlint, kita akan menginstal squid karena Berlint berperan sebagai Proxy Server
 
@@ -160,6 +163,10 @@ apt-get update
 apt-get install squid -y
 ```
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200990983-970a0d65-130f-4133-b1b9-c4cf46964aa2.jpeg"> 
+</p>
+
 Ketiga, pada node Westalis, kita akan menginstal **isc-dhcp-server** karena Westalis berperan sebagai DHCP Server
 
 > kita dapat langsung menjalankannya dengan melakukan command ```bash soal1.sh```
@@ -170,6 +177,10 @@ apt-get update
 apt-get install isc-dhcp-server -y
 ```
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200991025-5d91ef84-ae65-4bd1-a40c-ed0eea7f71f8.jpeg"> 
+</p>
+
 Lalu untuk node-node lainnya, kita dapat mengetes apakah masing-masing node sudah terhubung jaringan internet dengan menjalankan ```bash soal1.sh``` pada masing-masing node
 
 * Ostania dan Client
@@ -177,6 +188,17 @@ Lalu untuk node-node lainnya, kita dapat mengetes apakah masing-masing node suda
 ```
 ping google.com -c 5
 ```
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200991239-9912abcf-b02d-4d77-88d8-655163b0fd4e.jpeg"> 
+</p>
+<p float="left" align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200991463-ff238827-2ddb-4646-87ed-688c77794987.jpg" width=48% height=48%> 
+  <img src="https://user-images.githubusercontent.com/56400536/200991494-2c45f047-1cb1-4494-8a9b-27f276497412.jpg" width=48% height=48%>
+  <img src="https://user-images.githubusercontent.com/56400536/200991703-691edd71-876c-4609-8791-e638db6c4e73.jpg" width=48% height=48%> 
+  <img src="https://user-images.githubusercontent.com/56400536/200991520-f85966ab-a832-4eb9-8c0c-db794c0a3d3e.jpg" width=48% height=48%> 
+  <img src="https://user-images.githubusercontent.com/56400536/200991554-a7ab0236-5a75-47af-ac8e-4b06a00c1afa.jpg" width=48% height=48%>
+</p>
 
 ## Soal 2
 , dan Ostania sebagai DHCP Relay
@@ -191,6 +213,10 @@ apt-get update
 apt-get install isc-dhcp-relay -y
 service isc-dhcp-relay restart
 ```
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200992287-6c0fc18d-9e59-4ebc-ae2e-81c742d056bb.jpeg"> 
+</p>
 
 ## Soal 3
 Ada beberapa kriteria yang ingin dibuat oleh Loid dan Franky, yaitu:
@@ -225,7 +251,12 @@ subnet 10.17.2.0 netmask 255.255.255.0 {
 
 service isc-dhcp-server restart
 ```
-*) Apabila muncul ```[fail]``` setelah me-*restart*, kita dapat menonaktifkan dan mengaktifkan **isc-dhcp-server** secara manual
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200992400-3a528335-7ad4-4780-a2db-53010475efc2.jpg"> 
+</p>
+
+*) Apabila muncul ```[fail]``` seperti pada gambar di atas, kita dapat menonaktifkan dan mengaktifkan **isc-dhcp-server** secara manual
 
 ## Soal 4
 3. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.10 - [prefix IP].3.30 dan [prefix IP].3.60 - [prefix IP].3.85
@@ -250,6 +281,10 @@ subnet 10.17.3.0 netmask 255.255.255.0 {
 
 service isc-dhcp-server restart
 ```
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200992521-7a932472-713e-47c2-b5c5-b80b9690ff44.jpg"> 
+</p>
 
 ## Soal 5
 4. Client mendapatkan DNS dari WISE dan client dapat terhubung dengan internet melalui DNS tersebut.
@@ -279,6 +314,10 @@ options {
 service bind9 restart
 ```
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200992597-9e4f55b2-79c1-45c5-a769-c40f4cebb2b8.jpg"> 
+</p>
+
 Setelah itu, kita dapat mengetes apakah client dapat terhubung dengan internet melalui DNS dengan cara melakukan ping ke IP Address DNS Server
 
 > kita dapat langsung menjalankannya dengan melakukan command ```bash soal5.sh```
@@ -288,10 +327,18 @@ Setelah itu, kita dapat mengetes apakah client dapat terhubung dengan internet m
 ping 10.17.2.2 -c 5
 ```
 
+<p float="left" align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200992671-9a278115-54d4-4cc4-bd3c-8a3de2cf7dd6.jpg" width=48% height=48%> 
+  <img src="https://user-images.githubusercontent.com/56400536/200992700-eddf6194-3d5e-4e14-8bf7-273c88a95dee.jpg" width=48% height=48%>
+  <img src="https://user-images.githubusercontent.com/56400536/200992733-3bccb14f-8978-404f-a2b1-3dd593f47a26.jpg" width=48% height=48%> 
+  <img src="https://user-images.githubusercontent.com/56400536/200992756-c7056405-3bf1-4011-87a1-ec5195fb4767.jpg" width=48% height=48%>
+  <img src="https://user-images.githubusercontent.com/56400536/200992783-01167770-fa55-4eb0-882e-81a57c1d0f47.jpg" width=48% height=48%> 
+</p>
+
 ## Soal 6
 5. Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch1 selama 5 menit sedangkan pada client yang melalui Switch3 selama 10 menit. Dengan waktu maksimal yang dialokasikan untuk peminjaman alamat IP selama 115 menit.
 ### Jawab
-Karena kita sudah mengatur ```default-lease-time``` dan ```max-lease-time``` pada saat mengerjakan soal no. 3 dan 4, kita dapat langsung mengetesnya pada client. Tapi sebelumnya, kita harus mengonfigurasikan DHCP Client dengan cara mengganti isi file ```/etc/network/interfaces``` agar sesuai dengan script yang ada di bawah. Setelah itu, *restart* node client. Setelah berhasil me-*restart*, cek ip node client dengan ```ip a``` untuk melihat perubahan IP Address serta informasi *lease time*
+Karena kita sudah mengatur ```default-lease-time``` dan ```max-lease-time``` pada saat mengerjakan soal no. 3 dan 4, kita dapat langsung mengetesnya pada client. Tapi sebelumnya, kita harus mengonfigurasikan DHCP Client dengan cara mengganti isi file ```/etc/network/interfaces``` agar sesuai dengan script yang ada di bawah.
 
 > kita dapat langsung menjalankannya dengan melakukan command ```bash soal6.sh```
 
@@ -302,6 +349,16 @@ auto eth0
 iface eth0 inet dhcp
 ' > /etc/network/interfaces
 ```
+
+Setelah menjalankan command tersebut, *restart* node client. Kemudian, cek IP node client dengan ```ip a``` untuk melihat perubahan IP Address
+
+<p float="left" align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200993194-d4cc76f2-2de3-4980-84b2-a44184221f8c.jpg" width=48% height=48%> 
+  <img src="https://user-images.githubusercontent.com/56400536/200993165-ee2497e9-5614-4ce6-a34a-f65b93bdb540.jpg" width=48% height=48%>
+  <img src="https://user-images.githubusercontent.com/56400536/200993074-cdb1e475-3cf6-4c01-ae65-f1955ea57d99.jpg" width=48% height=48%> 
+  <img src="https://user-images.githubusercontent.com/56400536/200993011-5e26ab27-5294-4aa5-882b-0b47de6dfdb3.jpg" width=48% height=48%>
+  <img src="https://user-images.githubusercontent.com/56400536/200992999-c772ac88-1f14-4ec2-9257-3fa83009620f.jpg" width=48% height=48%> 
+</p>
 
 ## Soal 7
 Loid dan Franky berencana menjadikan Eden sebagai server untuk pertukaran informasi dengan alamat IP yang tetap dengan IP [prefix IP].3.13
@@ -314,7 +371,7 @@ Pertama, pada node Westalis, kita dapat menambahkan konfigurasi seperti pada scr
 ```
 echo -e '
 host Eden {
-    hardware ethernet 1e:d7:57:4e:c8:41;
+    hardware ethernet 'hwaddress_milik_Eden';
     fixed-address 10.17.3.13;
 }
 ' >> /etc/dhcp/dhcpd.conf
@@ -322,17 +379,26 @@ host Eden {
 service isc-dhcp-server restart
 ```
 
-Lalu beralih ke node Eden, kita dapat menambahkan ```hwaddress ether 1e:d7:57:4e:c8:41``` ke dalam file ```/etc/network/interfaces```
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200993286-a9e1146d-8153-47b0-9f08-efe22b0e8411.jpg"> 
+</p>
+
+Lalu beralih ke node Eden, kita dapat menambahkan ```hwaddress ether 'hwaddress_milik_Eden'``` ke dalam file ```/etc/network/interfaces```
 
 > kita dapat langsung menjalankannya dengan melakukan command ```bash soal7.sh```
 
 * Eden 
 ```
 echo -e '
-auto eth0
-iface eth0 inet dhcp
-hwaddress ether 1e:d7:57:4e:c8:41
-' > /etc/network/interfaces
+hwaddress ether 'hwaddress_milik_Eden'
+' >> /etc/network/interfaces
 ```
 
-Setelah menjalankan command tersebut, *restart* node Eden. Kemudian, cek ip node client dengan ```ip a``` untuk melihat perubahan IP Address
+Setelah menjalankan command tersebut, *restart* node Eden. Kemudian, cek IP node Eden dengan ```ip a``` untuk melihat perubahan IP Address
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/56400536/200994549-3e2ab548-1b53-4be7-9b57-693a112d5209.jpeg"> 
+</p>
+
+## Kendala Yang Dialami
+Salah satu kendala yang dialami adalah kendala ketika mengonfigurasikan DHCP Relay karena tidak ada di dalam modul
