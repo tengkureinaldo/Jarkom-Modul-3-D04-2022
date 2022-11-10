@@ -401,4 +401,4 @@ Setelah menjalankan command tersebut, *restart* node Eden. Kemudian, cek IP node
 </p>
 
 ## Kendala Yang Dialami
-Salah satu kendala yang dialami adalah kendala ketika mengonfigurasikan DHCP Relay karena tidak ada di dalam modul
+Salah satu kendala yang dialami adalah kendala ketika mengonfigurasikan DHCP Relay karena tidak termasuk di dalam materi modul
