@@ -400,5 +400,222 @@ Setelah menjalankan command tersebut, *restart* node Eden. Kemudian, cek IP node
   <img src="https://user-images.githubusercontent.com/56400536/200994549-3e2ab548-1b53-4be7-9b57-693a112d5209.jpeg"> 
 </p>
 
+## Soal 8
+Client hanya dapat mengakses internet diluar (selain) hari & jam kerja (senin-jumat 08.00 - 17.00) dan hari libur (dapat mengakses 24 jam penuh)
+### Berlint
+Dipastikan auto update waktu dan tanggal mati agar dapat mengubah tanggal dan waktu pada terminal.
+```
+echo '
+acl WORKING time MTWHF 08:00-17:00
+' > /etc/squid/acl.conf
+echo '
+include /etc/squid/acl.conf
+http_port 8080
+visible_hostname Berlint
+http_access deny WORKING
+http_access allow all
+' > /etc/squid/squid.conf
+service squid restart
+```
+![image](https://user-images.githubusercontent.com/77779184/201885987-22a2a2ad-5ea9-4d80-b32d-b1de01378377.png)
+### SSS
+```
+apt-get update
+apt-get install lynx -y
+export http_proxy="http://10.17.2.3:8080"
+date -s "7 NOV 2022 13:30:00"
+lynx google.com
+```
+![image2](https://user-images.githubusercontent.com/77779184/201886942-d67a7805-4054-4ec9-a250-533bc7b8ea41.png)
+### Garden
+```
+apt-get update
+apt-get install lynx -y
+export http_proxy="http://10.17.2.3:8080"
+date -s "7 NOV 2022 18:30:00"
+lynx google.com
+```
+![image3](https://user-images.githubusercontent.com/77779184/201887261-dd88d3f4-821c-4cc7-9c30-7f18ea807ffd.png)
+## Soal 9
+Adapun pada hari dan jam kerja sesuai nomor (1), client hanya dapat mengakses domain loid-work.com dan franky-work.com (IP tujuan domain dibebaskan)
+### WISE
+```
+echo '
+zone "loid-work.com" {
+        type master;
+        file "/etc/bind/jarkom/loid-work.com";
+};
+zone "franky-work.com" {
+        type master;
+        file "/etc/bind/jarkom/franky-work.com";
+};
+' > /etc/bind/named.conf.local
+mkdir /etc/bind/jarkom
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     loid-work.com. root.loid-work.com. (
+                     2022110901         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      loid-work.com.
+@       IN      A       10.17.2.2
+' > /etc/bind/jarkom/loid-work.com
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     franky-work.com. root.franky-work.com. (
+                     2022110902         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      franky-work.com.
+@       IN      A       10.17.2.2
+' > /etc/bind/jarkom/franky-work.com
+service bind9 restart
+```
+![image5](https://user-images.githubusercontent.com/77779184/201888298-0c0da15a-07b0-479c-9872-d7b2470c0fd4.png)
+### Berlint
+```
+echo '
+loid-work.com
+franky-work.com
+' > /etc/squid/work-sites.acl
+echo '
+include /etc/squid/acl.conf
+http_port 8080
+visible_hostname Berlint
+acl WORKSITES dstdomain "/etc/squid/work-sites.acl"
+http_access allow WORKSITES
+http_access deny WORKING
+http_access allow all
+' > /etc/squid/squid.conf
+service squid restart
+```
+![image6](https://user-images.githubusercontent.com/77779184/201888408-fa9735a2-764d-4271-bbee-7e0456446697.png)
+### SSS
+```
+export http_proxy="http://10.17.2.3:8080"
+date -s "7 NOV 2022 13:30:00"
+lynx franky-work.com
+lynx loid-work.com
+lynx google.com
+```
+> internet tidak bisa diakses
+![image7](https://user-images.githubusercontent.com/77779184/201888599-9e21094a-8cb8-405f-9c18-b71ccdeeb238.png)
+## Soal 10
+Saat akses internet dibuka, client dilarang untuk mengakses web tanpa HTTPS. (Contoh web HTTP: http://example.com)
+### Berlint
+```
+echo '
+include /etc/squid/acl.conf
+http_port 8080
+visible_hostname Berlint
+acl WORKSITES dstdomain "/etc/squid/work-sites.acl"
+http_access allow WORKSITES
+http_access deny WORKING
+http_access deny all
+' > /etc/squid/squid.conf
+service squid restart
+```
+![image8](https://user-images.githubusercontent.com/77779184/201888732-a8d17161-49d6-4c0e-9e0f-2f0f69084af2.png)
+### SSS
+```
+export http_proxy="http://10.17.2.3:8080"
+date -s "7 NOV 2022 18:30:00"
+lynx http://www.example.com
+lynx https://www.example.com
+```
+> http://example.com tidak bisa diakses
+![image9](https://user-images.githubusercontent.com/77779184/201888897-2981ee97-5661-4d75-838f-0eb2b5f97032.png)
+## Soal 11
+Agar menghemat penggunaan, akses internet dibatasi dengan kecepatan maksimum 128 Kbps pada setiap host (Kbps = kilobit per second; lakukan pengecekan pada tiap host, ketika 2 host akses internet pada saat bersamaan, keduanya mendapatkan speed maksimal yaitu 128 Kbps)
+### Berlint
+```
+echo '
+include /etc/squid/acl.conf
+http_port 8080
+visible_hostname Berlint
+acl WORKSITES dstdomain "/etc/squid/work-sites.acl"
+http_access allow WORKSITES
+http_access deny WORKING
+http_access allow all
+delay_pools 1
+delay_class 1 2 
+delay_access 1 allow all
+delay_parameters 1 none 16000/32000
+' > /etc/squid/squid.conf
+service squid restart
+```
+![image11](https://user-images.githubusercontent.com/77779184/201889249-ac822fa3-7d12-48c3-abe0-ad3ca9a6a795.png)
+### SSS
+```
+unset http_proxy
+apt-get install speedtest-cli -y
+export PYTHONHTTPSVERIFY=0
+export http_proxy="http://10.17.2.3:8080"
+date -s "7 NOV 2022 18:30:00"
+speedtest
+```
+![image12](https://user-images.githubusercontent.com/77779184/201889397-bcf6f09a-cd3d-4a30-8d81-1a6c8933db5f.png)
+### Garden
+```
+unset http_proxy
+apt-get install speedtest-cli -y
+export PYTHONHTTPSVERIFY=0
+export http_proxy="http://10.17.2.3:8080"
+date -s "7 NOV 2022 18:30:00"
+speedtest
+```
+![image13](https://user-images.githubusercontent.com/77779184/201889524-b3e88070-955d-4665-9cbd-82a246703d6f.png)
+## Soal 12
+Setelah diterapkan, ternyata peraturan nomor (4) mengganggu produktifitas saat hari kerja, dengan demikian pembatasan kecepatan hanya diberlakukan untuk pengaksesan internet pada hari libur
+### Berlint
+```
+echo '
+include /etc/squid/acl.conf
+http_port 8080
+visible_hostname Berlint
+acl WORKSITES dstdomain "/etc/squid/work-sites.acl"
+http_access allow WORKSITES
+http_access deny WORKING
+http_access allow all
+acl OPEN_TIME time MTWHF
+delay_pools 1
+delay_class 1 2
+delay_access 1 allow !OPEN_TIME
+delay_parameters 1 none 16000/32000
+' > /etc/squid/squid.conf
+service squid restart
+```
+![image14](https://user-images.githubusercontent.com/77779184/201889630-4ed87efe-10ee-43b7-8de9-4120d11f722e.png)
+### SSS
+```
+unset http_proxy
+export PYTHONHTTPSVERIFY=0
+export http_proxy="http://10.17.2.3:8080"
+date -s "6 NOV 2022 18:30:00"
+speedtest
+```
+![image15](https://user-images.githubusercontent.com/77779184/201889845-52b4df79-1246-423d-9207-66a7071b17ef.png)
+### Garden
+```
+unset http_proxy
+export PYTHONHTTPSVERIFY=0
+export http_proxy="http://10.17.2.3:8080"
+date -s "7 NOV 2022 13:30:00"
+speedtest
+```
+![image16](https://user-images.githubusercontent.com/77779184/201890055-9b7feaf5-0ca7-4a40-96a5-7bded26164b6.png)
+
 ## Kendala Yang Dialami
 Salah satu kendala yang dialami adalah kendala ketika mengonfigurasikan DHCP Relay karena tidak termasuk di dalam materi modul
